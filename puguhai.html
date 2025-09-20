@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puguh AI Sukses - Generator Judul Tesis Ekonomi</title>
+    <title>Puguh AI Sukses - Generator Kerangka Jurnal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
             transition: 0.5s;
             background-size: 200% auto;
             color: white;
-            box-shadow: 0 0 20px #eee;
+            box-shadow: 0 4px 15px 0 rgba(59, 130, 246, 0.35);
         }
         .btn-gradient:hover {
             background-position: right center;
@@ -36,95 +36,130 @@
                 transform: translateY(0);
             }
         }
+        textarea, input {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        textarea:focus, input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .error-border {
+             border-color: #ef4444; /* red-500 */
+        }
+        #journalOutput h3 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700; /* font-bold */
+            color: #1e3a8a; /* blue-900 */
+            margin-top: 1.5rem; /* mt-6 */
+            margin-bottom: 0.5rem; /* mb-2 */
+            padding-bottom: 0.25rem; /* pb-1 */
+            border-bottom: 2px solid #dbeafe; /* border-blue-100 */
+        }
+         #journalOutput p {
+            line-height: 1.75;
+            color: #334155; /* slate-700 */
+         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center transform transition-all duration-500">
-        <!-- Header Section -->
-        <div class="flex justify-center items-center mb-6">
-            <div class="bg-blue-100 p-3 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+    <main class="w-full max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center transform transition-all duration-500">
+            <!-- Header Section -->
+            <div class="flex justify-center items-center mb-4">
+                <div class="bg-blue-100 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">
+                Puguh AI Sukses
+            </h1>
+            <p class="text-slate-600 mt-2 text-base md:text-lg">
+                Generator Kerangka Jurnal Ilmiah Berbasis AI
+            </p>
+            
+            <!-- Input Form -->
+            <div class="mt-8 text-left space-y-6">
+                 <div>
+                    <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul Tesis / Jurnal</label>
+                    <input type="text" id="title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Contoh: Pengaruh Influencer Marketing terhadap Minat Beli...">
+                </div>
+                <div>
+                    <label for="phenomenon" class="block text-sm font-semibold text-gray-700 mb-2">Fenomena</label>
+                    <textarea id="phenomenon" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Jelaskan fenomena unik atau menarik yang Anda amati. Contoh: Meningkatnya tren 'live shopping' di kalangan Gen Z..."></textarea>
+                </div>
+                <div>
+                    <label for="gap" class="block text-sm font-semibold text-gray-700 mb-2">Research Gap (Kesenjangan Penelitian)</label>
+                    <textarea id="gap" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none" placeholder="Jelaskan apa yang belum terjawab oleh penelitian sebelumnya. Contoh: Penelitian sebelumnya banyak membahas e-commerce, namun sedikit yang fokus pada dampak 'live shopping' terhadap brand loyalty..."></textarea>
+                </div>
+            </div>
+             <p id="error-message" class="text-red-500 text-sm mt-4 hidden">Harap isi semua kolom untuk melanjutkan.</p>
+
+            <!-- Action Button -->
+            <div class="mt-8">
+                <button id="generateBtn" class="btn-gradient w-full md:w-auto font-bold py-4 px-10 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                    ✨ Buatkan Kerangka Jurnal
+                </button>
             </div>
         </div>
-        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">
-            Puguh AI Sukses
-        </h1>
-        <p class="text-slate-600 mt-2 text-base md:text-lg">
-            Asisten Cerdas untuk Judul Tesis Ekonomi Anda
-        </p>
 
         <!-- Result Display Area -->
-        <div id="resultContainer" class="hidden mt-8 text-left p-6 bg-slate-50 border border-slate-200 rounded-xl">
-            <p class="text-sm font-semibold text-blue-600 mb-2">✨ Berikut adalah ide judul untuk Anda:</p>
-            <p id="thesisTitle" class="text-lg font-semibold text-gray-700"></p>
+        <div id="resultContainer" class="hidden mt-10 bg-white rounded-2xl shadow-2xl p-8 md:p-12 card-result">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Kerangka Jurnal Anda</h2>
+                <button id="copyBtn" class="bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold py-2 px-4 rounded-lg flex items-center transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    Salin Teks
+                </button>
+            </div>
+            <div id="journalOutput" class="text-left"></div>
         </div>
 
-        <!-- Action Button -->
-        <div class="mt-10">
-            <button id="generateBtn" class="btn-gradient w-full md:w-auto font-bold py-4 px-10 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                🚀 Dapatkan Judul Baru
-            </button>
-        </div>
-
-        <!-- Footer -->
-        <footer class="mt-12">
+         <footer class="mt-8 text-center">
             <p class="text-xs text-slate-400">
                 Dibuat untuk membantu perjuangan mahasiswa ekonomi di seluruh Indonesia.
             </p>
         </footer>
-    </div>
+    </main>
 
     <script>
-        // --- Database Judul Tesis Ekonomi ---
-        // Topik dikelompokkan berdasarkan bidang minat untuk variasi yang lebih baik.
-        const thesisTopics = [
-            // Ekonomi Digital & E-Commerce
-            "Analisis Pengaruh Penggunaan E-Wallet terhadap Perilaku Konsumtif Generasi Z di Kota [Nama Kota].",
-            "Dampak Adopsi Digitalisasi UMKM terhadap Peningkatan Pendapatan dan Efisiensi Operasional di [Nama Daerah].",
-            "Pengaruh Strategi Pemasaran Influencer terhadap Keputusan Pembelian Produk Fashion di Platform E-Commerce [Nama Platform].",
-            "Analisis Faktor-Faktor yang Mempengaruhi Minat Penggunaan PayLater pada Mahasiswa di Indonesia.",
-            "Studi Komparatif Efektivitas Iklan pada TikTok dan Instagram terhadap Brand Awareness Produk [Nama Produk].",
-
-            // Ekonomi Pembangunan & Regional
-            "Dampak Pembangunan Infrastruktur Jalan Tol terhadap Pertumbuhan Ekonomi dan Harga Properti di Koridor [Nama Koridor Tol].",
-            "Analisis Efektivitas Program Dana Desa dalam Mengurangi Tingkat Kemiskinan dan Ketimpangan di Kabupaten [Nama Kabupaten].",
-            "Pengaruh Sektor Pariwisata terhadap Pendapatan Asli Daerah (PAD) dan Penyerapan Tenaga Kerja di [Destinasi Wisata].",
-            "Evaluasi Peran Koperasi Unit Desa (KUD) dalam Meningkatkan Kesejahteraan Petani di [Nama Wilayah].",
-            "Dampak Investasi Asing Langsung (FDI) pada Pertumbuhan Sektor Manufaktur di Provinsi [Nama Provinsi].",
-
-            // Keuangan & Perbankan (Termasuk Syariah)
-            "Analisis Pengaruh Tingkat Suku Bunga BI (BI Rate) terhadap Kinerja Reksadana Saham di Indonesia.",
-            "Studi Komparasi Kinerja Keuangan antara Bank Konvensional dan Bank Syariah di Indonesia Periode [Tahun-Tahun].",
-            "Pengaruh Literasi Keuangan dan Inklusi Keuangan terhadap Keputusan Investasi Generasi Milenial.",
-            "Analisis Faktor-Faktor yang Mempengaruhi Tingkat Non-Performing Financing (NPF) pada Bank Umum Syariah.",
-            "Dampak Kebijakan Makroprudensial Loan to Value (LTV) terhadap Pertumbuhan Kredit Pemilikan Rumah (KPR).",
-
-            // Perdagangan Internasional & Makroekonomi
-            "Analisis Dampak Perang Dagang AS-Tiongkok terhadap Kinerja Ekspor Komoditas [Nama Komoditas] Indonesia.",
-            "Pengaruh Fluktuasi Nilai Tukar Rupiah dan Inflasi terhadap Indeks Harga Saham Gabungan (IHSG).",
-            "Analisis Daya Saing Produk Kopi Indonesia di Pasar Internasional (Studi Kasus: [Negara Tujuan Ekspor]).",
-            "Dampak Kebijakan Kenaikan Harga BBM Subsidi terhadap Tingkat Inflasi dan Daya Beli Masyarakat.",
-            "Pengaruh Utang Luar Negeri Pemerintah terhadap Pertumbuhan Ekonomi Indonesia dalam Jangka Panjang.",
-            
-            // Ekonomi Sumber Daya Manusia & Lingkungan
-            "Analisis Pengaruh Upah Minimum Provinsi (UMP) terhadap Tingkat Pengangguran dan Penyerapan Tenaga Kerja Sektor Formal.",
-            "Dampak Implementasi Ekonomi Hijau (Green Economy) terhadap Pertumbuhan Ekonomi dan Emisi Karbon di Indonesia.",
-            "Pengaruh Tingkat Pendidikan dan Pelatihan Kerja terhadap Produktivitas Tenaga Kerja di Sektor Industri [Nama Industri].",
-            "Valuasi Ekonomi Objek Wisata Alam [Nama Objek Wisata] dengan Metode Biaya Perjalanan (Travel Cost Method).",
-            "Studi tentang Hubungan antara Pertumbuhan Ekonomi, Konsumsi Energi, dan Degradasi Lingkungan di Indonesia (Hipotesis Kurva Kuznets Lingkungan)."
-        ];
-
         // --- DOM Element References ---
         const generateBtn = document.getElementById('generateBtn');
         const resultContainer = document.getElementById('resultContainer');
-        const thesisTitleElement = document.getElementById('thesisTitle');
+        const journalOutput = document.getElementById('journalOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        const titleInput = document.getElementById('title');
+        const phenomenonInput = document.getElementById('phenomenon');
+        const gapInput = document.getElementById('gap');
+        const errorMessage = document.getElementById('error-message');
 
         // --- Event Listener ---
         generateBtn.addEventListener('click', () => {
-            // 1. Tampilkan status loading
+            const title = titleInput.value.trim();
+            const phenomenon = phenomenonInput.value.trim();
+            const gap = gapInput.value.trim();
+            
+            // --- Input Validation ---
+            let isValid = true;
+            [titleInput, phenomenonInput, gapInput].forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('error-border');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error-border');
+                }
+            });
+
+            if (!isValid) {
+                errorMessage.classList.remove('hidden');
+                return;
+            }
+            errorMessage.classList.add('hidden');
+            
+            // --- Show Loading State ---
             generateBtn.disabled = true;
             generateBtn.innerHTML = `
                 <span class="flex items-center justify-center">
@@ -132,30 +167,105 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Memproses...
+                    AI Sedang Berpikir...
                 </span>`;
             
-            resultContainer.classList.add('hidden');
-            resultContainer.classList.remove('card-result');
-
-
-            // 2. Simulasikan proses berpikir AI
+            // --- AI Simulation ---
             setTimeout(() => {
-                // 3. Pilih judul secara acak
-                const randomIndex = Math.floor(Math.random() * thesisTopics.length);
-                const randomTopic = thesisTopics[randomIndex];
+                const journalStructure = generateJournalStructure(title, phenomenon, gap);
+                journalOutput.innerHTML = journalStructure;
                 
-                // 4. Tampilkan hasil
-                thesisTitleElement.textContent = randomTopic;
                 resultContainer.classList.remove('hidden');
-                resultContainer.classList.add('card-result');
+                 window.scrollTo({
+                    top: resultContainer.offsetTop - 20,
+                    behavior: 'smooth'
+                });
 
-                // 5. Kembalikan tombol ke keadaan semula
+                // --- Reset Button ---
                 generateBtn.disabled = false;
-                generateBtn.innerHTML = '🚀 Dapatkan Judul Baru';
-
-            }, 800); // Durasi 0.8 detik untuk simulasi
+                generateBtn.innerHTML = '✨ Buatkan Kerangka Jurnal';
+            }, 1200);
         });
+        
+        copyBtn.addEventListener('click', () => {
+            const textToCopy = journalOutput.innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                copyBtn.innerHTML = '✅ Berhasil Disalin!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Salin Teks`;
+                }, 2000);
+            });
+        });
+
+        // --- AI Journal Generator Function ---
+        function generateJournalStructure(title, phenomenon, gap) {
+            return `
+                <h3>Judul Penelitian</h3>
+                <p><strong>${title}</strong></p>
+
+                <h3>Abstrak</h3>
+                <p><i>(Tuliskan abstrak di sini setelah penelitian selesai. Abstrak harus mencakup tujuan, metodologi, temuan utama, dan implikasi secara ringkas dalam sekitar 200-250 kata.)</i></p>
+
+                <h3>1. Pendahuluan</h3>
+                <p>
+                    <strong>1.1. Latar Belakang Masalah:</strong> Penelitian ini dilatarbelakangi oleh sebuah fenomena yang berkembang pesat, yaitu <strong>${phenomenon}</strong>. Fenomena ini menunjukkan adanya pergeseran perilaku atau tren baru yang signifikan dalam konteks ekonomi saat ini, sehingga menarik untuk diteliti lebih dalam.
+                </p>
+                <p>
+                    <strong>1.2. Rumusan Masalah:</strong> Berdasarkan pengamatan terhadap fenomena tersebut, muncul beberapa pertanyaan. Namun, studi-studi terdahulu belum sepenuhnya menjawab permasalahan ini. Terdapat kesenjangan penelitian <i>(research gap)</i> yang teridentifikasi, di mana <strong>${gap}</strong>. Kesenjangan inilah yang menjadi justifikasi utama mengapa penelitian ini penting untuk dilakukan.
+                </p>
+                <p>
+                    <strong>1.3. Pertanyaan Penelitian:</strong> Oleh karena itu, pertanyaan utama dalam penelitian ini adalah: Bagaimana [variabel utama dari judul] mempengaruhi [variabel dependen dari judul] dalam konteks fenomena yang terjadi? <i>(Sesuaikan pertanyaan ini agar lebih spesifik dengan judul Anda)</i>.
+                </p>
+                <p>
+                    <strong>1.4. Tujuan dan Manfaat Penelitian:</strong> Penelitian ini bertujuan untuk menganalisis dan membuktikan [tujuan utama dari judul]. Hasilnya diharapkan dapat memberikan manfaat teoretis dengan mengisi kesenjangan literatur yang ada, serta manfaat praktis bagi [sebutkan pihak terkait, misal: pelaku bisnis, regulator, UMKM] sebagai dasar pengambilan keputusan.
+                </p>
+                
+                <h3>2. Tinjauan Pustaka dan Pengembangan Hipotesis</h3>
+                <p>
+                    <strong>2.1. Landasan Teori:</strong> Bagian ini akan mengulas teori-teori besar yang relevan dengan variabel-variabel dalam penelitian Anda. (Contoh: Teori Perilaku Konsumen, Teori Sinyal, Technology Acceptance Model, dll yang berkaitan dengan <strong>"${title}"</strong>).
+                </p>
+                <p>
+                    <strong>2.2. Penelitian Terdahulu:</strong> Meninjau setidaknya 10-15 penelitian relevan dari jurnal internasional dan nasional yang membahas topik serupa. Tinjauan ini digunakan untuk memetakan apa yang sudah diketahui dan memperkuat <i>research gap</i>.
+                </p>
+                 <p>
+                    <strong>2.3. Pengembangan Hipotesis:</strong> Berdasarkan landasan teori dan tinjauan penelitian terdahulu, hipotesis penelitian dirumuskan. (Contoh: H1: Terdapat pengaruh positif dan signifikan antara [Variabel X] terhadap [Variabel Y]).
+                </p>
+
+                <h3>3. Metodologi Penelitian</h3>
+                <p>
+                    <strong>3.1. Pendekatan Penelitian:</strong> Penelitian ini akan menggunakan pendekatan [Kuantitatif / Kualitatif / Campuran].
+                </p>
+                <p>
+                    <strong>3.2. Populasi dan Sampel:</strong> Populasi dalam penelitian ini adalah [jelaskan populasi Anda]. Teknik pengambilan sampel yang digunakan adalah [Probability/Non-Probability Sampling], dengan jumlah sampel sebanyak [tentukan jumlah] responden.
+                </p>
+                <p>
+                    <strong>3.3. Teknik Pengumpulan Data:</strong> Data akan dikumpulkan melalui [kuesioner online / wawancara mendalam / data sekunder dari BEI/BPS].
+                </p>
+                <p>
+                    <strong>3.4. Teknik Analisis Data:</strong> Data yang terkumpul akan dianalisis menggunakan [Regresi Linier Berganda / SEM-PLS / Analisis Deskriptif / Studi Kasus] dengan bantuan software [SPSS / SmartPLS / NVivo].
+                </p>
+
+                <h3>4. Hasil dan Pembahasan</h3>
+                <p><i>(Bagian ini akan diisi setelah data terkumpul dan dianalisis. Sajikan hasil statistik/temuan kualitatif Anda secara jelas, lalu bahas temuan tersebut dengan menghubungkannya kembali ke teori dan penelitian terdahulu.)</i></p>
+
+                <h3>5. Kesimpulan dan Implikasi</h3>
+                <p>
+                    <strong>5.1. Kesimpulan:</strong> Merangkum jawaban atas pertanyaan penelitian berdasarkan hasil analisis.
+                </p>
+                <p>
+                    <strong>5.2. Implikasi Penelitian:</strong> Menjelaskan implikasi teoretis (kontribusi terhadap ilmu pengetahuan) dan implikasi manajerial/praktis (saran untuk para praktisi).
+                </p>
+                <p>
+                    <strong>5.3. Keterbatasan dan Saran Penelitian Lanjutan:</strong> Mengakui batasan-batasan dalam penelitian ini dan memberikan saran topik untuk penelitian di masa depan.
+                </p>
+                
+                <h3>Referensi</h3>
+                <p><i>(Daftar semua sumber yang dikutip dalam naskah, diformat sesuai gaya sitasi yang ditentukan, misalnya APA 7th Edition.)</i></p>
+            `;
+        }
     </script>
 </body>
 </html>
+
