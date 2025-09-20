@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puguh AI Sukses - Generator Judul Tesis Ekonomi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .btn-gradient {
+            background-image: linear-gradient(to right, #3b82f6 0%, #8b5cf6 51%, #3b82f6 100%);
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            box-shadow: 0 0 20px #eee;
+        }
+        .btn-gradient:hover {
+            background-position: right center;
+        }
+        .card-result {
+            animation: fadeIn 0.7s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center transform transition-all duration-500">
+        <!-- Header Section -->
+        <div class="flex justify-center items-center mb-6">
+            <div class="bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+            </div>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">
+            Puguh AI Sukses
+        </h1>
+        <p class="text-slate-600 mt-2 text-base md:text-lg">
+            Asisten Cerdas untuk Judul Tesis Ekonomi Anda
+        </p>
+
+        <!-- Result Display Area -->
+        <div id="resultContainer" class="hidden mt-8 text-left p-6 bg-slate-50 border border-slate-200 rounded-xl">
+            <p class="text-sm font-semibold text-blue-600 mb-2">✨ Berikut adalah ide judul untuk Anda:</p>
+            <p id="thesisTitle" class="text-lg font-semibold text-gray-700"></p>
+        </div>
+
+        <!-- Action Button -->
+        <div class="mt-10">
+            <button id="generateBtn" class="btn-gradient w-full md:w-auto font-bold py-4 px-10 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                🚀 Dapatkan Judul Baru
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12">
+            <p class="text-xs text-slate-400">
+                Dibuat untuk membantu perjuangan mahasiswa ekonomi di seluruh Indonesia.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Database Judul Tesis Ekonomi ---
+        // Topik dikelompokkan berdasarkan bidang minat untuk variasi yang lebih baik.
+        const thesisTopics = [
+            // Ekonomi Digital & E-Commerce
+            "Analisis Pengaruh Penggunaan E-Wallet terhadap Perilaku Konsumtif Generasi Z di Kota [Nama Kota].",
+            "Dampak Adopsi Digitalisasi UMKM terhadap Peningkatan Pendapatan dan Efisiensi Operasional di [Nama Daerah].",
+            "Pengaruh Strategi Pemasaran Influencer terhadap Keputusan Pembelian Produk Fashion di Platform E-Commerce [Nama Platform].",
+            "Analisis Faktor-Faktor yang Mempengaruhi Minat Penggunaan PayLater pada Mahasiswa di Indonesia.",
+            "Studi Komparatif Efektivitas Iklan pada TikTok dan Instagram terhadap Brand Awareness Produk [Nama Produk].",
+
+            // Ekonomi Pembangunan & Regional
+            "Dampak Pembangunan Infrastruktur Jalan Tol terhadap Pertumbuhan Ekonomi dan Harga Properti di Koridor [Nama Koridor Tol].",
+            "Analisis Efektivitas Program Dana Desa dalam Mengurangi Tingkat Kemiskinan dan Ketimpangan di Kabupaten [Nama Kabupaten].",
+            "Pengaruh Sektor Pariwisata terhadap Pendapatan Asli Daerah (PAD) dan Penyerapan Tenaga Kerja di [Destinasi Wisata].",
+            "Evaluasi Peran Koperasi Unit Desa (KUD) dalam Meningkatkan Kesejahteraan Petani di [Nama Wilayah].",
+            "Dampak Investasi Asing Langsung (FDI) pada Pertumbuhan Sektor Manufaktur di Provinsi [Nama Provinsi].",
+
+            // Keuangan & Perbankan (Termasuk Syariah)
+            "Analisis Pengaruh Tingkat Suku Bunga BI (BI Rate) terhadap Kinerja Reksadana Saham di Indonesia.",
+            "Studi Komparasi Kinerja Keuangan antara Bank Konvensional dan Bank Syariah di Indonesia Periode [Tahun-Tahun].",
+            "Pengaruh Literasi Keuangan dan Inklusi Keuangan terhadap Keputusan Investasi Generasi Milenial.",
+            "Analisis Faktor-Faktor yang Mempengaruhi Tingkat Non-Performing Financing (NPF) pada Bank Umum Syariah.",
+            "Dampak Kebijakan Makroprudensial Loan to Value (LTV) terhadap Pertumbuhan Kredit Pemilikan Rumah (KPR).",
+
+            // Perdagangan Internasional & Makroekonomi
+            "Analisis Dampak Perang Dagang AS-Tiongkok terhadap Kinerja Ekspor Komoditas [Nama Komoditas] Indonesia.",
+            "Pengaruh Fluktuasi Nilai Tukar Rupiah dan Inflasi terhadap Indeks Harga Saham Gabungan (IHSG).",
+            "Analisis Daya Saing Produk Kopi Indonesia di Pasar Internasional (Studi Kasus: [Negara Tujuan Ekspor]).",
+            "Dampak Kebijakan Kenaikan Harga BBM Subsidi terhadap Tingkat Inflasi dan Daya Beli Masyarakat.",
+            "Pengaruh Utang Luar Negeri Pemerintah terhadap Pertumbuhan Ekonomi Indonesia dalam Jangka Panjang.",
+            
+            // Ekonomi Sumber Daya Manusia & Lingkungan
+            "Analisis Pengaruh Upah Minimum Provinsi (UMP) terhadap Tingkat Pengangguran dan Penyerapan Tenaga Kerja Sektor Formal.",
+            "Dampak Implementasi Ekonomi Hijau (Green Economy) terhadap Pertumbuhan Ekonomi dan Emisi Karbon di Indonesia.",
+            "Pengaruh Tingkat Pendidikan dan Pelatihan Kerja terhadap Produktivitas Tenaga Kerja di Sektor Industri [Nama Industri].",
+            "Valuasi Ekonomi Objek Wisata Alam [Nama Objek Wisata] dengan Metode Biaya Perjalanan (Travel Cost Method).",
+            "Studi tentang Hubungan antara Pertumbuhan Ekonomi, Konsumsi Energi, dan Degradasi Lingkungan di Indonesia (Hipotesis Kurva Kuznets Lingkungan)."
+        ];
+
+        // --- DOM Element References ---
+        const generateBtn = document.getElementById('generateBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const thesisTitleElement = document.getElementById('thesisTitle');
+
+        // --- Event Listener ---
+        generateBtn.addEventListener('click', () => {
+            // 1. Tampilkan status loading
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = `
+                <span class="flex items-center justify-center">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Memproses...
+                </span>`;
+            
+            resultContainer.classList.add('hidden');
+            resultContainer.classList.remove('card-result');
+
+
+            // 2. Simulasikan proses berpikir AI
+            setTimeout(() => {
+                // 3. Pilih judul secara acak
+                const randomIndex = Math.floor(Math.random() * thesisTopics.length);
+                const randomTopic = thesisTopics[randomIndex];
+                
+                // 4. Tampilkan hasil
+                thesisTitleElement.textContent = randomTopic;
+                resultContainer.classList.remove('hidden');
+                resultContainer.classList.add('card-result');
+
+                // 5. Kembalikan tombol ke keadaan semula
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '🚀 Dapatkan Judul Baru';
+
+            }, 800); // Durasi 0.8 detik untuk simulasi
+        });
+    </script>
+</body>
+</html>
